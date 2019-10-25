@@ -9,7 +9,7 @@ target 'Quakes' do
   pod 'Alamofire', '5.0.0-rc.2'
   pod 'Charts'
   pod 'SwiftLint'
-
+  pod 'PromiseKit', '6.11.0'
 
   target 'QuakesTests' do
     inherit! :search_paths
