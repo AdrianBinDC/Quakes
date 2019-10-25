@@ -40,4 +40,33 @@ class APIManagerTests: XCTestCase {
         let tooBigRadius = apiManager.getURL(for: tokyo, radius: 20001.7)
         XCTAssertNil(tooBigRadius)
     }
+    
+    func testGetQuakesWithCoordinate() {
+        let exp = expectation(description: "get earthquakes")
+        let apiManager = USGSAPIManager()
+        let tokyo = CLLocation(latitude: 37.6762, longitude: 139.6503)
+        apiManager.getData(queryType: .coordinates(location: tokyo, radius: 5000)) { (earthquakes, error) in
+            XCTAssertNotNil(earthquakes)
+            XCTAssertNil(error)
+            exp.fulfill()
+        }
+        
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testMeasurePerformance() {
+        measure {
+            let exp = expectation(description: "get earthquakes")
+            let apiManager = USGSAPIManager()
+            // Guaranteed lots of earthquakes
+            let tokyo = CLLocation(latitude: 37.6762, longitude: 139.6503)
+            apiManager.getData(queryType: .coordinates(location: tokyo, radius: 1000)) { (earthquakes, error) in
+                XCTAssertNotNil(earthquakes)
+                XCTAssertNil(error)
+                exp.fulfill()
+            }
+            
+            waitForExpectations(timeout: 10, handler: nil)
+        }
+    }
 }

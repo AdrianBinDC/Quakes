@@ -16,18 +16,18 @@ import CoreLocation
 struct USGSQuakeData: Codable {
     let type: String
     let metadata: Metadata
-    let features: [Feature]
+    let features: [Earthquake]
     let bbox: [Double]
 }
 
 // MARK: - Feature
-struct Feature: Codable, Hashable {
+struct Earthquake: Codable, Hashable {
     let type: FeatureType
     let properties: Properties
     let geometry: Geometry
     let id: String
     
-    static func == (lhs: Feature, rhs: Feature) -> Bool {
+    static func == (lhs: Earthquake, rhs: Earthquake) -> Bool {
         return lhs.id == rhs.id
     }
     

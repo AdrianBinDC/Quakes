@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import PromiseKit
 import CoreLocation
 
 
@@ -26,6 +25,49 @@ struct USGSQueryParams {
 }
 
 struct USGSAPIManager {
+    
+    enum USGSQueryType {
+        case queryParams(params: USGSQueryParams)
+        case coordinates(location: CLLocation, radius: Double)
+    }
+    
+    func getData(queryType: USGSQueryType,
+                 completion: @escaping(_ earthquakes: [Earthquake]?, _ error: Error?) -> Void) {
+        var url: URL?
+        
+        defer {
+            if let unwrappedURL = url {
+                getData(using: unwrappedURL) { (earthquakes, error) in
+                    completion(earthquakes, error)
+                }
+            } else {
+                completion(nil, nil)
+            }
+        }
+        
+        switch queryType {
+        case .queryParams(let params):
+            url = getURL(queryParameters: params)
+        case .coordinates(let location, let radius):
+            url = getURL(for: location, radius: radius)
+        }
+    }
+    
+    private func getData(using url: URL,
+                         completion: @escaping (_ earthquakes: [Earthquake]?, _ error: Error?) -> Void) {
+        AF.request(url).validate().response(queue: DispatchQueue.global(qos: .userInitiated)) { response in
+            if let data = response.data {
+                // decode the JSON
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .millisecondsSince1970
+                let decodedResponse = try? decoder.decode(USGSQuakeData.self, from: data)
+                completion(decodedResponse?.features, nil)
+            } else {
+                completion(nil, response.error)
+            }
+        }
+    }
+    
     func getURL(queryParameters: USGSQueryParams) -> URL? {
         var components = URLComponents(string: "https://earthquake.usgs.gov/fdsnws/event/1/query")
         
