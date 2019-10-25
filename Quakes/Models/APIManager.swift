@@ -11,28 +11,22 @@ import Alamofire
 import PromiseKit
 import CoreLocation
 
+
+/// Struct to store query parameters for USGS Earthquake Database
+struct USGSQueryParams {
+    var minMag: Double?
+    var maxMag: Double?
+    var alertLevel: AlertLevel?
+    var minLat: Double?
+    var maxLat: Double?
+    var minLong: Double?
+    var maxLong: Double?
+    var startTime: Date?
+    var endTime: Date?
+}
+
 struct USGSAPIManager {
-    
-    
-    /// Generates an URL for USGS Earthquake Database Endpoint
-    /// - Parameter minMag: minimum magnitude (Optional)
-    /// - Parameter maxMag: maximum magnitude (Optional)
-    /// - Parameter alertLevel: Alert Level (green, yellow, orange, or red)
-    /// - Parameter minLat: minimum latitude (Optional)
-    /// - Parameter maxLat: maximum latitude (Optional)
-    /// - Parameter minLong: minimum longitude (Optional)
-    /// - Parameter maxLong: maximum longitude (Optional)
-    /// - Parameter startTime: start time (Optional, UTC)
-    /// - Parameter endTime: end time (Optional, UTC)
-    func getURL(minMag: Double? = nil,
-                maxMag: Double? = nil,
-                alertLevel: AlertLevel? = nil,
-                minLat: Double? = nil,
-                maxLat: Double? = nil,
-                minLong: Double? = nil,
-                maxLong: Double? = nil,
-                startTime: Date? = nil,
-                endTime: Date? = nil) -> URL? {
+    func getURL(queryParameters: USGSQueryParams) -> URL? {
         var components = URLComponents(string: "https://earthquake.usgs.gov/fdsnws/event/1/query")
         
         // TODO: Figure out a more compact, but readable way to implement this
@@ -41,47 +35,47 @@ struct USGSAPIManager {
         queryItems.append(URLQueryItem(name: "format",
                                        value: "geojson"))
         
-        if let minMag = minMag {
+        if let minMag = queryParameters.minMag {
             queryItems.append(URLQueryItem(name: "minmag",
                                            value: minMag.string))
         }
         
-        if let maxMag = maxMag {
+        if let maxMag = queryParameters.maxMag {
             queryItems.append(URLQueryItem(name: "maxmag",
                                            value: maxMag.string))
         }
         
-        if let alertLevel = alertLevel {
+        if let alertLevel = queryParameters.alertLevel {
             queryItems.append(URLQueryItem(name: "alertlevel",
                                            value: alertLevel.rawValue))
         }
         
-        if let minLat = minLat {
+        if let minLat = queryParameters.minLat {
             queryItems.append(URLQueryItem(name: "minlatitude",
                                            value: minLat.string))
         }
         
-        if let maxLat = maxLat {
+        if let maxLat = queryParameters.maxLat {
             queryItems.append(URLQueryItem(name: "maxlatitude",
                                            value: maxLat.string))
         }
         
-        if let minLong = minLong {
+        if let minLong = queryParameters.minLong {
             queryItems.append(URLQueryItem(name: "minlongitude",
                                            value: minLong.string))
         }
         
-        if let maxLong = maxLong {
+        if let maxLong = queryParameters.maxLong {
             queryItems.append(URLQueryItem(name: "maxlongitude",
                                            value: maxLong.string))
         }
         
-        if let startTime = startTime {
+        if let startTime = queryParameters.startTime {
             queryItems.append(URLQueryItem(name: "starttime",
                                            value: startTime.iso8601String))
         }
         
-        if let endTime = endTime {
+        if let endTime = queryParameters.endTime {
             queryItems.append(URLQueryItem(name: "endtime",
                                            value: endTime.iso8601String))
         }
@@ -90,7 +84,6 @@ struct USGSAPIManager {
         
         return components?.url
     }
-    
     
     /// Generates an URL for a given CLLocation with a specified radius in kilometers
     /// - Parameter location: A CLLocation with latitude and longitude coordinates
