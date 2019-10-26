@@ -10,7 +10,6 @@
 		3DC2E38A22B2DA434584EA5F /* Pods_Quakes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8679CA2E95332E1674512B6D /* Pods_Quakes.framework */; };
 		55221A8D236280F60042A038 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55221A8C236280F60042A038 /* AppDelegate.swift */; };
 		55221A8F236280F60042A038 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55221A8E236280F60042A038 /* SceneDelegate.swift */; };
-		55221A91236280F60042A038 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55221A90236280F60042A038 /* ViewController.swift */; };
 		55221A94236280F60042A038 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55221A92236280F60042A038 /* Main.storyboard */; };
 		55221A96236280F80042A038 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55221A95236280F80042A038 /* Assets.xcassets */; };
 		55221A99236280F80042A038 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55221A97236280F80042A038 /* LaunchScreen.storyboard */; };
@@ -19,6 +18,7 @@
 		55221AB22362848E0042A038 /* QuakeDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55221AB12362848E0042A038 /* QuakeDataModel.swift */; };
 		55221AB5236296840042A038 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55221AB4236296840042A038 /* Date+Extension.swift */; };
 		55221AB7236299690042A038 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55221AB6236299690042A038 /* Double+Extension.swift */; };
+		55221ABA2363A4770042A038 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55221AB92363A4770042A038 /* MainViewController.swift */; };
 		7B07D4CD8C9170089AF17334 /* Pods_QuakesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F71C098573403A98A66B513F /* Pods_QuakesTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,7 +37,6 @@
 		55221A89236280F60042A038 /* Quakes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quakes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55221A8C236280F60042A038 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55221A8E236280F60042A038 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		55221A90236280F60042A038 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		55221A93236280F60042A038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		55221A95236280F80042A038 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55221A98236280F80042A038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 		55221AB12362848E0042A038 /* QuakeDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuakeDataModel.swift; sourceTree = "<group>"; };
 		55221AB4236296840042A038 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		55221AB6236299690042A038 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		55221AB92363A4770042A038 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		8679CA2E95332E1674512B6D /* Pods_Quakes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quakes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87019713900DCDE079AEE092 /* Pods-QuakesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuakesTests.debug.xcconfig"; path = "Target Support Files/Pods-QuakesTests/Pods-QuakesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B2D2120234C790A92956F24F /* Pods-Quakes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quakes.release.xcconfig"; path = "Target Support Files/Pods-Quakes/Pods-Quakes.release.xcconfig"; sourceTree = "<group>"; };
@@ -110,12 +110,11 @@
 		55221A8B236280F60042A038 /* Quakes */ = {
 			isa = PBXGroup;
 			children = (
+				55221AB82363A43E0042A038 /* View */,
 				55221AB3236296690042A038 /* Extensions */,
 				55221AB02362838D0042A038 /* Models */,
 				55221A8C236280F60042A038 /* AppDelegate.swift */,
 				55221A8E236280F60042A038 /* SceneDelegate.swift */,
-				55221A90236280F60042A038 /* ViewController.swift */,
-				55221A92236280F60042A038 /* Main.storyboard */,
 				55221A95236280F80042A038 /* Assets.xcassets */,
 				55221A97236280F80042A038 /* LaunchScreen.storyboard */,
 				55221A9A236280F80042A038 /* Info.plist */,
@@ -148,6 +147,15 @@
 				55221AB6236299690042A038 /* Double+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		55221AB82363A43E0042A038 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				55221A92236280F60042A038 /* Main.storyboard */,
+				55221AB92363A4770042A038 /* MainViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		66EAFDC36D23994595EA08BC /* Frameworks */ = {
@@ -327,8 +335,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55221ABA2363A4770042A038 /* MainViewController.swift in Sources */,
 				55221AAF236283870042A038 /* APIManager.swift in Sources */,
-				55221A91236280F60042A038 /* ViewController.swift in Sources */,
 				55221AB7236299690042A038 /* Double+Extension.swift in Sources */,
 				55221A8D236280F60042A038 /* AppDelegate.swift in Sources */,
 				55221AB22362848E0042A038 /* QuakeDataModel.swift in Sources */,

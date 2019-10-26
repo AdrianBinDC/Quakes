@@ -80,7 +80,7 @@ struct Properties: Codable {
     let url: String
 }
 
-enum AlertLevel: String, Codable {
+enum AlertLevel: String, Codable, CaseIterable {
     case green = "green"
     case yellow = "yellow"
     case orange = "orange"

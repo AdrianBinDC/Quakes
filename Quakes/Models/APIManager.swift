@@ -24,6 +24,12 @@ struct USGSQueryParams {
     var endTime: Date?
 }
 
+enum USGSAPIError: Error {
+    case configurationError
+    case serverError(message: String)
+    case decodingError(message: String)
+}
+
 struct USGSAPIManager {
     
     enum USGSQueryType {
@@ -32,7 +38,7 @@ struct USGSAPIManager {
     }
     
     func getData(queryType: USGSQueryType,
-                 completion: @escaping(_ earthquakes: [Earthquake]?, _ error: Error?) -> Void) {
+                 completion: @escaping(_ earthquakes: [Earthquake]?, _ error: USGSAPIError?) -> Void) {
         var url: URL?
         
         defer {
@@ -54,17 +60,34 @@ struct USGSAPIManager {
     }
     
     private func getData(using url: URL,
-                         completion: @escaping (_ earthquakes: [Earthquake]?, _ error: Error?) -> Void) {
-        AF.request(url).validate().response(queue: DispatchQueue.global(qos: .userInitiated)) { response in
-            if let data = response.data {
-                // decode the JSON
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .millisecondsSince1970
-                let decodedResponse = try? decoder.decode(USGSQuakeData.self, from: data)
-                completion(decodedResponse?.features, nil)
-            } else {
-                completion(nil, response.error)
+                         completion: @escaping (_ earthquakes: [Earthquake]?, _ error: USGSAPIError?) -> Void) {
+        AF.request(url).response(queue: DispatchQueue.global(qos: .userInitiated)) { response in
+            guard let statusCode = response.response?.statusCode else {
+                completion(nil, nil)
+                return
             }
+            
+            switch statusCode {
+            case 200..<300:
+                if let data = response.data {
+                    // decode the JSON
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .millisecondsSince1970
+                    do {
+                        let decodedResponse = try decoder.decode(USGSQuakeData.self, from: data)
+                        completion(decodedResponse.features, nil)
+                    } catch {
+                        completion(nil, USGSAPIError.decodingError(message: error.localizedDescription))
+                    }
+                }
+            case 400..<500:
+                completion(nil, USGSAPIError.serverError(message: response.debugDescription))
+            case 500..<600:
+                completion(nil, USGSAPIError.configurationError)
+            default:
+                break
+            }
+            
         }
     }
     
